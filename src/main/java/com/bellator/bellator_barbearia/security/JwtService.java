@@ -1,5 +1,6 @@
 package com.bellator.bellator_barbearia.security;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Service;
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Map;
 
@@ -21,32 +21,43 @@ public class JwtService {
     @Value("${app.jwt.issuer}")
     private String issuer;
 
-    @Value("${app.jwt.expirationMinutes}")
-    private long expirationMinutes;
+    @Value("${app.jwt.expiration}")
+    private long expiration;
 
     public JwtService(@Value("${app.jwt.secret}") String secret) {
-        // precisa de pelo menos 64 chars para HS512 sem dor de cabeça
-        if (secret == null || secret.length() < 64) {
-            secret = (secret == null ? "" : secret) + "0".repeat(Math.max(0, 64 - (secret == null ? 0 : secret.length())));
-        }
         this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
     public String generate(String subject, Map<String, Object> claims) {
+
         Instant now = Instant.now();
-        Instant exp = now.plus(expirationMinutes, ChronoUnit.MINUTES);
+
         return Jwts.builder()
-                .setIssuer(issuer)
                 .setSubject(subject)
+                .setIssuer(issuer)
                 .setIssuedAt(Date.from(now))
-                .setExpiration(Date.from(exp))
+                .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .addClaims(claims)
-                .signWith(key, SignatureAlgorithm.HS512)
+                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
+    }
+    public String generateToken(String subject) {
+        return generate(subject, Map.of());
+    }
+    public boolean isTokenValid(String token) {
+        return !getSubject(token).getExpiration().before(new Date());
     }
 
     public String getSubject(String token) {
-        return Jwts.parserBuilder().setSigningKey(key).build()
-                .parseClaimsJws(token).getBody().getSubject();
+
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+
+        return claims.getSubject();
     }
+
+
 }

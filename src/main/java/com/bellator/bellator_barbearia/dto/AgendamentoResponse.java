@@ -1,6 +1,6 @@
 package com.bellator.bellator_barbearia.dto;
 
-import com.taylortech.bellator.model.StatusAgendamento;
+import com.bellator.bellator_barbearia.model.StatusAgendamento;
 import java.time.LocalDate;
 import java.time.LocalTime;
 

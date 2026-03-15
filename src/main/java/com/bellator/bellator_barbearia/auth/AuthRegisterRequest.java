@@ -1,6 +1,6 @@
-package com.bellator.bellator_barbearia.dto;
+package com.bellator.bellator_barbearia.auth;
 
-import com.taylortech.bellator.model.Role;
+import com.bellator.bellator_barbearia.model.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

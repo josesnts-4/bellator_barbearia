@@ -1,9 +1,9 @@
 package com.bellator.bellator_barbearia.service;
 
-import com.taylortech.bellator.exception.ApiException;
-import com.taylortech.bellator.model.Role;
-import com.taylortech.bellator.model.Usuario;
-import com.taylortech.bellator.repository.UsuarioRepository;
+import com.bellator.bellator_barbearia.exception.ApiException;
+import com.bellator.bellator_barbearia.model.Role;
+import com.bellator.bellator_barbearia.model.Usuario;
+import com.bellator.bellator_barbearia.repository.UsuarioRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 

@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "servicos")
 public class Servico {
@@ -23,14 +25,4 @@ public class Servico {
     @NotNull
     @Min(5)
     private Integer duracaoMinutos;
-
-    public Long getId() { return id; }
-    public String getNome() { return nome; }
-    public Double getPreco() { return preco; }
-    public Integer getDuracaoMinutos() { return duracaoMinutos; }
-
-    public void setId(Long id) { this.id = id; }
-    public void setNome(String nome) { this.nome = nome; }
-    public void setPreco(Double preco) { this.preco = preco; }
-    public void setDuracaoMinutos(Integer duracaoMinutos) { this.duracaoMinutos = duracaoMinutos; }
 }

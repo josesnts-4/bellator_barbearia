@@ -1,10 +1,10 @@
 package com.bellator.bellator_barbearia.controller;
 
-import com.taylortech.bellator.model.Agendamento;
-import com.taylortech.bellator.model.StatusAgendamento;
-import com.taylortech.bellator.model.Usuario;
-import com.taylortech.bellator.repository.AgendamentoRepository;
-import com.taylortech.bellator.repository.UsuarioRepository;
+import com.bellator.bellator_barbearia.model.Agendamento;
+import com.bellator.bellator_barbearia.model.StatusAgendamento;
+import com.bellator.bellator_barbearia.model.Usuario;
+import com.bellator.bellator_barbearia.repository.AgendamentoRepository;
+import com.bellator.bellator_barbearia.repository.UsuarioRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;

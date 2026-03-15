@@ -1,9 +1,9 @@
 package com.bellator.bellator_barbearia.controller;
 
-import com.taylortech.bellator.dto.ServicoRequest;
-import com.taylortech.bellator.dto.ServicoResponse;
-import com.taylortech.bellator.model.Servico;
-import com.taylortech.bellator.service.ServicoService;
+import com.bellator.bellator_barbearia.dto.ServicoRequest;
+import com.bellator.bellator_barbearia.dto.ServicoResponse;
+import com.bellator.bellator_barbearia.model.Servico;
+import com.bellator.bellator_barbearia.service.ServicoService;
 import jakarta.validation.Valid;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

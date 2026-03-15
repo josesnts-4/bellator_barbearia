@@ -1,7 +1,7 @@
 package com.bellator.bellator_barbearia.repository;
 
-import com.taylortech.bellator.model.Role;
-import com.taylortech.bellator.model.Usuario;
+import com.bellator.bellator_barbearia.model.Role;
+import com.bellator.bellator_barbearia.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

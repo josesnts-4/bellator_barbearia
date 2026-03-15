@@ -1,7 +1,7 @@
 package com.bellator.bellator_barbearia.security;
 
-import com.taylortech.bellator.model.Usuario;
-import com.taylortech.bellator.repository.UsuarioRepository;
+import com.bellator.bellator_barbearia.model.Usuario;
+import com.bellator.bellator_barbearia.repository.UsuarioRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

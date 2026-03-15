@@ -189,3 +189,7 @@ export function adminReport(){
   }
   return { total, doneCount: done.length, byService };
 }
+
+//as telas chamam a api.js, e a api.js mexe nos dados do sistema.
+//Ela não é uma API real de servidor.
+// Ela funciona como um “backend falso/local” para o projeto rodar sem banco de dados real.

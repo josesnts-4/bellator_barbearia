@@ -1,10 +1,10 @@
 package com.bellator.bellator_barbearia.config;
 
-import com.taylortech.bellator.model.Role;
-import com.taylortech.bellator.model.Servico;
-import com.taylortech.bellator.model.Usuario;
-import com.taylortech.bellator.repository.ServicoRepository;
-import com.taylortech.bellator.repository.UsuarioRepository;
+import com.bellator.bellator_barbearia.model.Role;
+import com.bellator.bellator_barbearia.model.Servico;
+import com.bellator.bellator_barbearia.model.Usuario;
+import com.bellator.bellator_barbearia.repository.ServicoRepository;
+import com.bellator.bellator_barbearia.repository.UsuarioRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;

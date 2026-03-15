@@ -1,9 +1,9 @@
 package com.bellator.bellator_barbearia.controller;
 
-import com.taylortech.bellator.dto.AgendamentoCreateRequest;
-import com.taylortech.bellator.dto.AgendamentoResponse;
-import com.taylortech.bellator.model.Agendamento;
-import com.taylortech.bellator.service.AgendamentoService;
+import com.bellator.bellator_barbearia.dto.AgendamentoCreateRequest;
+import com.bellator.bellator_barbearia.dto.AgendamentoResponse;
+import com.bellator.bellator_barbearia.model.Agendamento;
+import com.bellator.bellator_barbearia.service.AgendamentoService;
 import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;

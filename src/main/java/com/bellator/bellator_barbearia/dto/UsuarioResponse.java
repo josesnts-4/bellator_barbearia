@@ -1,6 +1,6 @@
 package com.bellator.bellator_barbearia.dto;
 
-import com.taylortech.bellator.model.Role;
+import com.bellator.bellator_barbearia.model.Role;
 
 public class UsuarioResponse {
     public Long id;

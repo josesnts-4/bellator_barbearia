@@ -1,4 +1,4 @@
-package com.bellator.bellator_barbearia.config;
+package com.bellator.bellator_barbearia.security;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

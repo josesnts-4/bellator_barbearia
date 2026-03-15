@@ -1,8 +1,8 @@
 package com.bellator.bellator_barbearia.repository;
 
-import com.taylortech.bellator.model.Agendamento;
-import com.taylortech.bellator.model.StatusAgendamento;
-import com.taylortech.bellator.model.Usuario;
+import com.bellator.bellator_barbearia.model.Agendamento;
+import com.bellator.bellator_barbearia.model.StatusAgendamento;
+import com.bellator.bellator_barbearia.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;

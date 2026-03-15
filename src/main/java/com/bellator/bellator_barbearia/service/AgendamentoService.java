@@ -1,11 +1,11 @@
 package com.bellator.bellator_barbearia.service;
 
-import com.taylortech.bellator.dto.AgendamentoCreateRequest;
-import com.taylortech.bellator.exception.ApiException;
-import com.taylortech.bellator.model.Agendamento;
-import com.taylortech.bellator.model.StatusAgendamento;
-import com.taylortech.bellator.model.Usuario;
-import com.taylortech.bellator.repository.AgendamentoRepository;
+import com.bellator.bellator_barbearia.dto.AgendamentoCreateRequest;
+import com.bellator.bellator_barbearia.exception.ApiException;
+import com.bellator.bellator_barbearia.model.Agendamento;
+import com.bellator.bellator_barbearia.model.StatusAgendamento;
+import com.bellator.bellator_barbearia.model.Usuario;
+import com.bellator.bellator_barbearia.repository.AgendamentoRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 

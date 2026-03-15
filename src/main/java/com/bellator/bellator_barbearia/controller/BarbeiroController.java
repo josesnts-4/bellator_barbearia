@@ -1,7 +1,7 @@
 package com.bellator.bellator_barbearia.controller;
 
-import com.taylortech.bellator.dto.UsuarioResponse;
-import com.taylortech.bellator.service.UsuarioService;
+import com.bellator.bellator_barbearia.dto.UsuarioResponse;
+import com.bellator.bellator_barbearia.service.UsuarioService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

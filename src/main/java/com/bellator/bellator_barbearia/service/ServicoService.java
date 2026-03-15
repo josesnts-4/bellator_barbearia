@@ -1,9 +1,9 @@
 package com.bellator.bellator_barbearia.service;
 
-import com.taylortech.bellator.dto.ServicoRequest;
-import com.taylortech.bellator.exception.ApiException;
-import com.taylortech.bellator.model.Servico;
-import com.taylortech.bellator.repository.ServicoRepository;
+import com.bellator.bellator_barbearia.dto.ServicoRequest;
+import com.bellator.bellator_barbearia.exception.ApiException;
+import com.bellator.bellator_barbearia.model.Servico;
+import com.bellator.bellator_barbearia.repository.ServicoRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
