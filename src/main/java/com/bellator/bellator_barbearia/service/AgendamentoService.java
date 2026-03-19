@@ -2,9 +2,9 @@ package com.bellator.bellator_barbearia.service;
 
 import com.bellator.bellator_barbearia.dto.AgendamentoCreateRequest;
 import com.bellator.bellator_barbearia.exception.ApiException;
-import com.bellator.bellator_barbearia.model.Agendamento;
+import com.bellator.bellator_barbearia.model.Agendamentos;
 import com.bellator.bellator_barbearia.role.StatusAgendamento;
-import com.bellator.bellator_barbearia.model.Usuario;
+import com.bellator.bellator_barbearia.model.Usuarios;
 import com.bellator.bellator_barbearia.repository.AgendamentoRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -25,9 +25,9 @@ public class AgendamentoService {
         this.servicoService = servicoService;
     }
 
-    public Agendamento criar(String clienteEmail, AgendamentoCreateRequest req) {
-        Usuario cliente = usuarioService.byEmail(clienteEmail);
-        Usuario barbeiro = usuarioService.byId(req.barbeiroId);
+    public Agendamentos criar(String clienteEmail, AgendamentoCreateRequest req) {
+        Usuarios cliente = usuarioService.byEmail(clienteEmail);
+        Usuarios barbeiro = usuarioService.byId(req.barbeiroId);
 
         if (!"BARBEIRO".equals(barbeiro.getRole().name())) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Usuário selecionado não é barbeiro");
@@ -37,28 +37,28 @@ public class AgendamentoService {
             throw new ApiException(HttpStatus.CONFLICT, "Horário já ocupado");
         }
 
-        Agendamento a = new Agendamento();
+        Agendamentos a = new Agendamentos();
         a.setCliente(cliente);
         a.setBarbeiro(barbeiro);
-        a.setServico(servicoService.byId(req.servicoId));
+        a.setServicos(servicoService.byId(req.servicoId));
         a.setData(req.data);
         a.setHorario(req.horario);
         a.setStatus(StatusAgendamento.AGENDADO);
         return repo.save(a);
     }
 
-    public List<Agendamento> meus(String clienteEmail) {
-        Usuario cliente = usuarioService.byEmail(clienteEmail);
+    public List<Agendamentos> meus(String clienteEmail) {
+        Usuarios cliente = usuarioService.byEmail(clienteEmail);
         return repo.findByClienteOrderByDataDescHorarioDesc(cliente);
     }
 
-    public List<Agendamento> agendaBarbeiro(String barbeiroEmail, LocalDate data) {
-        Usuario barbeiro = usuarioService.byEmail(barbeiroEmail);
+    public List<Agendamentos> agendaBarbeiro(String barbeiroEmail, LocalDate data) {
+        Usuarios barbeiro = usuarioService.byEmail(barbeiroEmail);
         return repo.findByBarbeiroAndDataOrderByHorarioAsc(barbeiro, data);
     }
 
-    public Agendamento concluir(Long id, String barbeiroEmail) {
-        Agendamento a = repo.findById(id).orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Agendamento não encontrado"));
+    public Agendamentos concluir(Long id, String barbeiroEmail) {
+        Agendamentos a = repo.findById(id).orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Agendamento não encontrado"));
         if (!a.getBarbeiro().getEmail().equalsIgnoreCase(barbeiroEmail)) {
             throw new ApiException(HttpStatus.FORBIDDEN, "Você não pode concluir esse agendamento");
         }
@@ -66,8 +66,8 @@ public class AgendamentoService {
         return repo.save(a);
     }
 
-    public Agendamento cancelar(Long id, String requesterEmail, boolean isAdmin) {
-        Agendamento a = repo.findById(id).orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Agendamento não encontrado"));
+    public Agendamentos cancelar(Long id, String requesterEmail, boolean isAdmin) {
+        Agendamentos a = repo.findById(id).orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Agendamento não encontrado"));
         boolean isClienteDono = a.getCliente().getEmail().equalsIgnoreCase(requesterEmail);
         if (!isAdmin && !isClienteDono) {
             throw new ApiException(HttpStatus.FORBIDDEN, "Você não pode cancelar esse agendamento");
@@ -76,7 +76,7 @@ public class AgendamentoService {
         return repo.save(a);
     }
 
-    public List<Agendamento> listarTodos() {
+    public List<Agendamentos> listarTodos() {
         return repo.findAll();
     }
 }

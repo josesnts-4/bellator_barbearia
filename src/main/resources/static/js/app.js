@@ -1,7 +1,8 @@
-import * as api from "./data/api.js";
+import * as api from "./api.js";
 import { routes } from "./router.js";
-import { toast } from "./ui/ui.js";
+import { toast } from "./ui.js";
 
+console.log("JS CARREGOU");
 const view = document.getElementById("view");
 const backBtn = document.getElementById("backBtn");
 const menuBtn = document.getElementById("menuBtn");
@@ -16,7 +17,6 @@ const WHATS_NUMBER = "5581994328093"; // (81) 99432-8093
 const defaultMsg = encodeURIComponent("Olá! Quero agendar um horário na Bellator Barbearia. 👊");
 whatsBtn.href = `https://wa.me/${WHATS_NUMBER}?text=${defaultMsg}`;
 
-api.ensureDB();
 
 const ctx = {
   wizard: { serviceId:null, barberId:null, datetimeISO:null, __created:false }
@@ -32,12 +32,15 @@ function setTopbar({showBack, showMenu, title}){
   menuBtn.style.visibility = showMenu ? "visible" : "hidden";
   // keep brand always, title is optional (not used now)
 }
+function isAuthenticated() {
+  return !!localStorage.getItem("token");
+}
 
 function guard(path){
   const route = routes[path];
   if(!route) return { redirect:"/home" };
 
-  const me = api.me();
+  const isAuthed = isAuthenticated();
   const isAuthed = !!me;
 
   if(route.public) return { ok:true, me };
@@ -199,3 +202,20 @@ function openMenu(user){
   document.addEventListener("keydown", onKey);
   try{ window.lucide?.createIcons?.(); }catch(e){}
 }
+async function handleLogin() {
+  const email = document.getElementById("email").value;
+  const senha = document.getElementById("senha").value;
+
+  try {
+    await api.login(email, senha);
+    location.hash = "#/home";
+  } catch (e) {
+    alert("Erro no login");
+  }
+}
+await api.createAppointment({
+  barbeiroId: 1,
+  servicoId: 2,
+  data: "2026-03-20",
+  horario: "14:00"
+});

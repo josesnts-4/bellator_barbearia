@@ -3,12 +3,9 @@ package com.bellator.bellator_barbearia.controller;
 import com.bellator.bellator_barbearia.dto.AgendamentoCreateRequest;
 import com.bellator.bellator_barbearia.dto.AgendamentoResponse;
 import com.bellator.bellator_barbearia.model.Agendamentos;
-import com.bellator.bellator_barbearia.service.AgendamentoService;
-import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -32,5 +29,4 @@ public class AgendamentoController {
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
         return toResp(service.cancelar(id, auth.getName(), isAdmin));
     }
-}
 }

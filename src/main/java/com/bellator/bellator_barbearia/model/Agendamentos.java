@@ -15,7 +15,7 @@ import java.time.LocalTime;
                 @UniqueConstraint(name = "uk_barbeiro_data_hora", columnNames = {"barbeiro_id","data","horario"})
         }
 )
-public class Agendamento {
+public class Agendamentos {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,15 +23,15 @@ public class Agendamento {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "cliente_id")
-    private Usuario cliente;
+    private Usuarios cliente;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "barbeiro_id")
-    private Usuario barbeiro;
+    private Usuarios barbeiro;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "servico_id")
-    private Servico servico;
+    private Servicos servicos;
 
     @NotNull
     private LocalDate data;

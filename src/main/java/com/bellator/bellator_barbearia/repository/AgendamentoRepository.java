@@ -1,20 +1,20 @@
 package com.bellator.bellator_barbearia.repository;
 
-import com.bellator.bellator_barbearia.model.Agendamento;
+import com.bellator.bellator_barbearia.model.Agendamentos;
 import com.bellator.bellator_barbearia.role.StatusAgendamento;
-import com.bellator.bellator_barbearia.model.Usuario;
+import com.bellator.bellator_barbearia.model.Usuarios;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-public interface AgendamentoRepository extends JpaRepository<Agendamento, Long> {
-    boolean existsByBarbeiroAndDataAndHorario(Usuario barbeiro, LocalDate data, LocalTime horario);
+public interface AgendamentoRepository extends JpaRepository<Agendamentos, Long> {
+    boolean existsByBarbeiroAndDataAndHorario(Usuarios barbeiro, LocalDate data, LocalTime horario);
 
-    List<Agendamento> findByClienteOrderByDataDescHorarioDesc(Usuario cliente);
+    List<Agendamentos> findByClienteOrderByDataDescHorarioDesc(Usuarios cliente);
 
-    List<Agendamento> findByBarbeiroAndDataOrderByHorarioAsc(Usuario barbeiro, LocalDate data);
+    List<Agendamentos> findByBarbeiroAndDataOrderByHorarioAsc(Usuarios barbeiro, LocalDate data);
 
-    List<Agendamento> findByBarbeiroAndDataAndStatusNotOrderByHorarioAsc(Usuario barbeiro, LocalDate data, StatusAgendamento status);
+    List<Agendamentos> findByBarbeiroAndDataAndStatusNotOrderByHorarioAsc(Usuarios barbeiro, LocalDate data, StatusAgendamento status);
 }

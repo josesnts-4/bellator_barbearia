@@ -19,7 +19,7 @@ public class BarbeiroController {
     @GetMapping
     public List<UsuarioResponse> listar() {
         return usuarioService.listarBarbeiros().stream()
-                .map(u -> new UsuarioResponse(u.getId(), u.getNome(), u.getEmail(), u.getRole()))
+                .map(u -> new UsuarioResponse(u.getId(), u.getNome(), u.getEmail(),u.getTelefone(), u.getRole()))
                 .toList();
     }
 }

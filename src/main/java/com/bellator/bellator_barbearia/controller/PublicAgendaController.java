@@ -1,8 +1,8 @@
 package com.bellator.bellator_barbearia.controller;
 
-import com.bellator.bellator_barbearia.model.Agendamento;
+import com.bellator.bellator_barbearia.model.Agendamentos;
 import com.bellator.bellator_barbearia.role.StatusAgendamento;
-import com.bellator.bellator_barbearia.model.Usuario;
+import com.bellator.bellator_barbearia.model.Usuarios;
 import com.bellator.bellator_barbearia.repository.AgendamentoRepository;
 import com.bellator.bellator_barbearia.repository.UsuarioRepository;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +28,8 @@ public class PublicAgendaController {
      */
     @GetMapping
     public List<String> horariosOcupados(@RequestParam Long barbeiroId, @RequestParam LocalDate data) {
-        Usuario barbeiro = usuarioRepo.findById(barbeiroId).orElseThrow();
-        List<Agendamento> ags = agendamentoRepo
+        Usuarios barbeiro = usuarioRepo.findById(barbeiroId).orElseThrow();
+        List<Agendamentos> ags = agendamentoRepo
                 .findByBarbeiroAndDataAndStatusNotOrderByHorarioAsc(barbeiro, data, StatusAgendamento.CANCELADO);
 
         return ags.stream().map(a -> a.getHorario().toString()).toList();

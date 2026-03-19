@@ -2,7 +2,7 @@ package com.bellator.bellator_barbearia.service;
 
 import com.bellator.bellator_barbearia.exception.ApiException;
 import com.bellator.bellator_barbearia.role.Role;
-import com.bellator.bellator_barbearia.model.Usuario;
+import com.bellator.bellator_barbearia.model.Usuarios;
 import com.bellator.bellator_barbearia.repository.UsuarioRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,15 +18,15 @@ public class UsuarioService {
         this.repo = repo;
     }
 
-    public Usuario byEmail(String email) {
+    public Usuarios byEmail(String email) {
         return repo.findByEmail(email).orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
     }
 
-    public Usuario byId(Long id) {
+    public Usuarios byId(Long id) {
         return repo.findById(id).orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
     }
 
-    public List<Usuario> listarBarbeiros() {
+    public List<Usuarios> listarBarbeiros() {
         return repo.findByRole(Role.BARBEIRO);
     }
 }

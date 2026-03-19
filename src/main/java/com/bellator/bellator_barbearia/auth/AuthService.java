@@ -2,7 +2,7 @@ package com.bellator.bellator_barbearia.auth;
 
 import com.bellator.bellator_barbearia.dto.UsuarioResponse;
 import com.bellator.bellator_barbearia.exception.ApiException;
-import com.bellator.bellator_barbearia.model.Usuario;
+import com.bellator.bellator_barbearia.model.Usuarios;
 import com.bellator.bellator_barbearia.repository.UsuarioRepository;
 import com.bellator.bellator_barbearia.security.JwtService;
 import org.springframework.http.HttpStatus;
@@ -33,9 +33,10 @@ public class AuthService {
         if (usuarioRepo.existsByEmail(req.email)) {
             throw new ApiException(HttpStatus.CONFLICT, "Email já cadastrado");
         }
-        Usuario u = new Usuario();
+        Usuarios u = new Usuarios();
         u.setNome(req.nome);
         u.setEmail(req.email.toLowerCase());
+        u.setTelefone(req.telefone);
         u.setSenhaHash(encoder.encode(req.senha));
         u.setRole(req.role);
         u = usuarioRepo.save(u);
@@ -45,7 +46,7 @@ public class AuthService {
                 "uid", u.getId()
         ));
 
-        return new AuthResponse(token, u.getRole(), new UsuarioResponse(u.getId(), u.getNome(), u.getEmail(), u.getRole()));
+        return new AuthResponse(token, u.getRole(), new UsuarioResponse(u.getId(), u.getNome(), u.getEmail(),u.getTelefone(), u.getRole()));
     }
 
     public AuthResponse login(AuthRequest req) {
@@ -55,7 +56,7 @@ public class AuthService {
             throw new ApiException(HttpStatus.UNAUTHORIZED, "Credenciais inválidas");
         }
 
-        Usuario u = usuarioRepo.findByEmail(req.getEmail().toLowerCase())
+        Usuarios u = usuarioRepo.findByEmail(req.getEmail().toLowerCase())
                 .orElseThrow(() -> new ApiException(HttpStatus.UNAUTHORIZED, "Credenciais inválidas"));
 
         String token = jwtService.generate(u.getEmail(), Map.of(
@@ -63,6 +64,6 @@ public class AuthService {
                 "uid", u.getId()
         ));
 
-        return new AuthResponse(token, u.getRole(), new UsuarioResponse(u.getId(), u.getNome(), u.getEmail(), u.getRole()));
+        return new AuthResponse(token, u.getRole(), new UsuarioResponse(u.getId(), u.getNome(), u.getEmail(),u.getTelefone(), u.getRole()));
     }
 }

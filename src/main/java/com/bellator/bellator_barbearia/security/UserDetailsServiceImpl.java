@@ -1,6 +1,6 @@
 package com.bellator.bellator_barbearia.security;
 
-import com.bellator.bellator_barbearia.model.Usuario;
+import com.bellator.bellator_barbearia.model.Usuarios;
 import com.bellator.bellator_barbearia.repository.UsuarioRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -22,7 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario u = repo.findByEmail(username)
+        Usuarios u = repo.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
         return new User(u.getEmail(), u.getSenhaHash(),
                 List.of(new SimpleGrantedAuthority("ROLE_" + u.getRole().name())));

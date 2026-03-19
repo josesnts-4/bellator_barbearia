@@ -1,8 +1,8 @@
 package com.bellator.bellator_barbearia.config;
 
 import com.bellator.bellator_barbearia.role.Role;
-import com.bellator.bellator_barbearia.model.Servico;
-import com.bellator.bellator_barbearia.model.Usuario;
+import com.bellator.bellator_barbearia.model.Servicos;
+import com.bellator.bellator_barbearia.model.Usuarios;
 import com.bellator.bellator_barbearia.repository.ServicoRepository;
 import com.bellator.bellator_barbearia.repository.UsuarioRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -38,7 +38,7 @@ public class DevSeedRunner implements CommandLineRunner {
 
     private void seedUser(String nome, String email, String senha, Role role) {
         if (usuarioRepo.existsByEmail(email)) return;
-        Usuario u = new Usuario();
+        Usuarios u = new Usuarios();
         u.setNome(nome);
         u.setEmail(email);
         u.setSenhaHash(encoder.encode(senha));
@@ -49,7 +49,7 @@ public class DevSeedRunner implements CommandLineRunner {
     private void seedServico(String nome, double preco, int duracao) {
         boolean exists = servicoRepo.findAll().stream().anyMatch(s -> s.getNome().equalsIgnoreCase(nome));
         if (exists) return;
-        Servico s = new Servico();
+        Servicos s = new Servicos();
         s.setNome(nome);
         s.setPreco(preco);
         s.setDuracaoMinutos(duracao);

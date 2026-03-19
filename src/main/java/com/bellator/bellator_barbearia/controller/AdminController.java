@@ -1,7 +1,7 @@
 package com.bellator.bellator_barbearia.controller;
 
 import com.bellator.bellator_barbearia.dto.RelatorioResponse;
-import com.bellator.bellator_barbearia.model.Agendamento;
+import com.bellator.bellator_barbearia.model.Agendamentos;
 import com.bellator.bellator_barbearia.role.StatusAgendamento;
 import com.bellator.bellator_barbearia.service.AgendamentoService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,19 +21,19 @@ public class AdminController {
 
     @GetMapping("/agendamentos")
     @PreAuthorize("hasRole('ADMIN')")
-    public List<Agendamento> listarTodos() {
+    public List<Agendamentos> listarTodos() {
         return agendamentoService.listarTodos();
     }
 
     @GetMapping("/relatorio")
     @PreAuthorize("hasRole('ADMIN')")
     public RelatorioResponse relatorio() {
-        List<Agendamento> all = agendamentoService.listarTodos();
+        List<Agendamentos> all = agendamentoService.listarTodos();
         long total = all.size();
         long concluidos = all.stream().filter(a -> a.getStatus() == StatusAgendamento.CONCLUIDO).count();
         double faturamento = all.stream()
                 .filter(a -> a.getStatus() == StatusAgendamento.CONCLUIDO)
-                .mapToDouble(a -> a.getServico().getPreco() == null ? 0.0 : a.getServico().getPreco())
+                .mapToDouble(a -> a.getServicos().getPreco() == null ? 0.0 : a.getServicos().getPreco())
                 .sum();
         return new RelatorioResponse(total, concluidos, faturamento);
     }

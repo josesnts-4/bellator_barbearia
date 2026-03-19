@@ -30,7 +30,20 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
 
                 .authorizeHttpRequests(auth -> auth
+                        // 🔓 LIBERA FRONT (ESSENCIAL)
+                        .requestMatchers(
+                                "/",
+                                "/index.html",
+                                "/css/**",
+                                "/js/**",
+                                "/assets/**",
+                                "/images/**"
+                        ).permitAll()
+
+                        // 🔓 LIBERA LOGIN / H2
                         .requestMatchers("/auth/**", "/h2-console/**").permitAll()
+
+                        // 🔒 RESTO PROTEGIDO
                         .anyRequest().authenticated()
                 )
 
@@ -38,8 +51,10 @@ public class SecurityConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 );
 
+        // JWT
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
+        // H2 console
         http.headers(headers -> headers.frameOptions(frame -> frame.disable()));
 
         return http.build();
