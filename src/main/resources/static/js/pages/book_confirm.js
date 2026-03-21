@@ -1,5 +1,6 @@
-import { el, toast, money, fmtDate, fmtTime, mountReveal } from "../ui/ui.js";
-import * as api from "../data/api.js";
+import * as api from "../api.js";
+import { el, toast } from "../ui.js";
+import { buildCalendar } from "../calendar.js";
 
 export function BookConfirmPage(ctx){
   const { user } = ctx;

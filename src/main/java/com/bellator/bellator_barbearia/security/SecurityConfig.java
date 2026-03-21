@@ -33,11 +33,13 @@ public class SecurityConfig {
                         // 🔓 LIBERA FRONT (ESSENCIAL)
                         .requestMatchers(
                                 "/",
+                                "/health",
+                                "/app",
                                 "/index.html",
-                                "/css/**",
-                                "/js/**",
+                                "/styles.css",
+                                "/favicon.ico",
                                 "/assets/**",
-                                "/images/**"
+                                "/js/**"
                         ).permitAll()
 
                         // 🔓 LIBERA LOGIN / H2

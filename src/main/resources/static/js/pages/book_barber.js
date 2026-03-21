@@ -1,5 +1,6 @@
-import { el, toast, mountReveal } from "../ui/ui.js";
-import * as api from "../data/api.js";
+import * as api from "../api.js";
+import { el, toast, mountReveal } from "../ui.js";
+import { BarberCard } from "../barber.js";
 
 export function BookBarberPage(ctx){
   const wrap = el("div", {});

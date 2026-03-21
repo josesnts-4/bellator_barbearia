@@ -1,5 +1,5 @@
-import { el, toast, mountReveal } from "../ui/ui.js";
-import * as api from "../data/api.js";
+import * as api from "../api.js";
+import { el, money, mountReveal } from "../ui.js";
 
 export function BookServicePage(ctx){
   const wrap = el("div", {});

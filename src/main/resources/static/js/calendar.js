@@ -1,4 +1,4 @@
-import { el } from "./ui.js";
+import { buildCalendar } from "../calendar.js";
 
 const DOW = ["D","S","T","Q","Q","S","S"]; // dom..sab
 

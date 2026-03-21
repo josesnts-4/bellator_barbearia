@@ -1,6 +1,6 @@
-import { el, toast, mountReveal, fmtDate, fmtTime } from "../ui/ui.js";
-import { Calendar } from "../ui/calendar.js";
-import * as api from "../data/api.js";
+import { el, toast, mountReveal, fmtDate, fmtTime } from "../ui.js";
+import { Calendar } from "../calendar.js";
+import * as api from "../api.js";
 
 export function BookDateTimePage(ctx){
   const wrap = el("div", {});
@@ -21,12 +21,11 @@ export function BookDateTimePage(ctx){
   const timesWrap = el("div",{class:"section"});
   wrap.append(calWrap, timesWrap);
 
-  const minDate = new Date(); // today+
+  const minDate = new Date();
   let selectedDate = null;
   let selectedTime = null;
 
   function disabledDates(){
-    // demo: no disabled dates besides past
     return [];
   }
 
@@ -130,7 +129,7 @@ export function BookDateTimePage(ctx){
 }
 
 function addMinutes(d, m){ return new Date(d.getTime() + m*60000); }
-function isPast(d){ return d.getTime() < Date.now() + 1*60000; } // allow 1 min buffer
+function isPast(d){ return d.getTime() < Date.now() + 1*60000; }
 function sameMinute(a,b){
   return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate()
     && a.getHours()===b.getHours() && a.getMinutes()===b.getMinutes();

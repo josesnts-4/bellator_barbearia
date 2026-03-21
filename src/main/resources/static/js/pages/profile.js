@@ -1,5 +1,5 @@
-import { el, setActiveNav, toast, mountReveal } from "../ui/ui.js";
-import * as api from "../data/api.js";
+import { el, setActiveNav, toast, mountReveal } from "../ui.js";
+import * as api from "../api.js";
 
 export function ProfilePage(ctx){
   setActiveNav("profile");

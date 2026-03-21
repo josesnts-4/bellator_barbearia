@@ -1,5 +1,5 @@
-import { el, toast, mountReveal } from "../ui/ui.js";
-import * as api from "../data/api.js";
+import { el, toast, mountReveal } from "../ui.js";
+import * as api from "../api.js";
 
 export function AuthPage(){
   const wrap = el("div", {});
