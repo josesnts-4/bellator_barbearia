@@ -33,6 +33,9 @@ export async function login(email, senha) {
   });
 
   localStorage.setItem("token", data.token);
+  if (data.user) {
+    localStorage.setItem("user", JSON.stringify(data.user));
+  }
   return data;
 }
 
@@ -50,8 +53,8 @@ export function logout() {
 export function me() {
   const token = getToken();
   if (!token) return null;
-  // Aqui você pode decodificar o token JWT se quiser obter dados do usuário
-  // ou buscar do localStorage se você salva o usuário lá após login
+  const user = localStorage.getItem("user");
+  if (user) return JSON.parse(user);
   return { token };
 }
 

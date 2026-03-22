@@ -38,7 +38,7 @@ public class AuthService {
         u.setEmail(req.email.toLowerCase());
         u.setTelefone(req.telefone);
         u.setSenhaHash(encoder.encode(req.senha));
-        u.setRole(req.role);
+        u.setRole(req.role != null ? req.role : com.bellator.bellator_barbearia.role.Role.CLIENTE); // valor padrão para role
         u = usuarioRepo.save(u);
 
         String token = jwtService.generate(u.getEmail(), Map.of(
