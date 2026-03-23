@@ -147,6 +147,6 @@ function fmtTime(iso) {
 
 function mountReveal(wrap) {
   setTimeout(() => {
-    wrap.querySelectorAll(".reveal").forEach((el) => el.classList.add("revealed"));
+    wrap.querySelectorAll(".reveal").forEach((el) => el.classList.add("is-in"));
   }, 10);
 }

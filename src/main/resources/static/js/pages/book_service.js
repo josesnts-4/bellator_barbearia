@@ -19,6 +19,7 @@ export async function BookServicePage(ctx){
   wrap.append(list);
 
   let selected = null;
+  let selectedCard = null;
 
   function render(){
     list.innerHTML = "";
@@ -53,7 +54,12 @@ export async function BookServicePage(ctx){
           el("div",{style:"font-weight:700"}, fmtMoney(s.preco))
         ])
       );
-      card.addEventListener("click", ()=>{ selected = s; render(); });
+      card.addEventListener("click", ()=>{
+        selected = s;
+        if (selectedCard) selectedCard.classList.remove("card--selected");
+        card.classList.add("card--selected");
+        selectedCard = card;
+      });
       list.append(card);
     }
   }

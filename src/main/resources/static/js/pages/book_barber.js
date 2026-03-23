@@ -25,6 +25,7 @@ export async function BookBarberPage(ctx){
   wrap.append(list);
 
   let selected = null;
+  let selectedCard = null;
 
   function render(){
     list.innerHTML = "";
@@ -34,7 +35,12 @@ export async function BookBarberPage(ctx){
         BarberCard(b),
         el("span",{class:"badge"}, "Disponível")
       );
-      card.addEventListener("click", ()=>{ selected = b; render(); });
+      card.addEventListener("click", ()=>{
+        selected = b;
+        if (selectedCard) selectedCard.classList.remove("card--selected");
+        card.classList.add("card--selected");
+        selectedCard = card;
+      });
       list.append(card);
     }
   }
