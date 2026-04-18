@@ -436,3 +436,36 @@ i[data-lucide]{
 .sheet__item:hover{ background: rgba(255,255,255,.10); }
 .sheet__item:active{ transform: translateY(1px); }
 .sheet__spacer{ flex:1; }
+
+
+//ajustes da senha e a mesclagem do card de senha com o card de perfil
+
+.password-wrapper{
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper .input{
+  width: 100%;
+  padding-right: 44px;
+}
+
+.toggle-password{
+  position: absolute;
+  right: 12px;
+  cursor: pointer;
+  opacity: .7;
+}
+
+.toggle-password:hover{
+  opacity: 1;
+}
+
+.card--selected .card__title{
+  color: #101010 !important;
+}
+
+.card--selected .card__row{
+  color: #101010;
+}
