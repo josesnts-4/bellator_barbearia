@@ -167,9 +167,21 @@ function statusLabel(s) {
 }
 
 function toDataHoraISO(data, horario) {
-  const d = data == null ? "" : String(data);
-  let h = horario == null ? "00:00:00" : String(horario);
-  if (h.length === 5) h = `${h}:00`;
+  let d = "";
+  if (Array.isArray(data)) {
+    d = `${data[0]}-${String(data[1]).padStart(2, "0")}-${String(data[2]).padStart(2, "0")}`;
+  } else {
+    d = data == null ? "" : String(data);
+  }
+
+  let h = "00:00:00";
+  if (Array.isArray(horario)) {
+    h = `${String(horario[0]).padStart(2, "0")}:${String(horario[1]).padStart(2, "0")}:00`;
+  } else {
+    h = horario == null ? "00:00:00" : String(horario);
+    if (h.length === 5) h = `${h}:00`;
+  }
+
   return `${d}T${h}`;
 }
 
@@ -209,7 +221,7 @@ export async function refreshAppointmentsForUser(user) {
       const rows = await myAppointments();
       __appointmentsCache = (Array.isArray(rows) ? rows : []).map(normalizeAgendamentoResponse);
     } else if (role === "barbeiro") {
-      const rows = await request(`/agendamentos/minha-agenda?data=${todayISO()}`);
+      const rows = await request(`/agendamentos/minha-agenda`);
       __appointmentsCache = (Array.isArray(rows) ? rows : []).map(normalizeAgendamentoResponse);
     } else if (role === "admin") {
       const rows = await request("/admin/agendamentos");

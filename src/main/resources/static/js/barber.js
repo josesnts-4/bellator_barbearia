@@ -30,17 +30,7 @@ export function BarberPanelPage(ctx) {
     await api.refreshAppointmentsForUser(user);
     const appts = api.listAppointmentsForUser(user).filter((a) => a.status !== "Cancelado");
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const todays = appts.filter((a) => {
-      const d = new Date(a.dataHora);
-      const dd = new Date(d);
-      dd.setHours(0, 0, 0, 0);
-      return dd.getTime() === today.getTime();
-    });
-
-    if (todays.length === 0) {
+    if (appts.length === 0) {
       list.append(
         el("div", { class: "card reveal" }, [
           el("div", { class: "card__title" }, "Sem horários hoje."),
@@ -51,8 +41,8 @@ export function BarberPanelPage(ctx) {
       return;
     }
 
-    for (const a of todays) {
-      const s = services[a.servicoId];
+    for (const a of appts) {
+      const sNome = a.servicoNome || "Serviço";
       const cNome = a.clienteNome || "Cliente";
 
       const card = el("div", { class: "card reveal" });
@@ -63,7 +53,7 @@ export function BarberPanelPage(ctx) {
             el(
               "div",
               { class: "card__title" },
-              `${s?.nome || "Serviço"} • ${fmtDateTime(a.dataHora)}`
+              `${sNome} • ${fmtDateTime(a.dataHora)}`
             ),
             el(
               "div",
@@ -76,18 +66,18 @@ export function BarberPanelPage(ctx) {
         el("div", { style: "margin-top:12px; display:flex; gap:10px; flex-wrap:wrap" }, [
           a.status === "Agendado"
             ? el(
-                "button",
-                {
-                  class: "btn btn--primary",
-                  type: "button",
-                  onClick: async () => {
-                    await api.completeAppointment(a.id);
-                    toast("Concluído ✅");
-                    render();
-                  }
-                },
-                "Concluir"
-              )
+              "button",
+              {
+                class: "btn btn--primary",
+                type: "button",
+                onClick: async () => {
+                  await api.completeAppointment(a.id);
+                  toast("Concluído ✅");
+                  render();
+                }
+              },
+              "Concluir"
+            )
             : el("button", { class: "btn", type: "button", disabled: true }, "Concluído")
         ])
       );

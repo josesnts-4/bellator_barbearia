@@ -28,9 +28,9 @@ public class DevSeedRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        seedUser("Admin", "admin@bellator.dev", "123456", Role.ADMIN);
-        seedUser("Carlos", "barber@bellator.dev", "123456", Role.BARBEIRO);
-        seedUser("Cliente", "client@bellator.dev", "123456", Role.CLIENTE);
+        // seedUser("Admin", "admin@bellator.dev", "123456", Role.ADMIN);
+        // seedUser("Carlos", "barber@bellator.dev", "123456", Role.BARBEIRO);
+        // seedUser("Cliente", "client@bellator.dev", "123456", Role.CLIENTE);
 
         seedServico("Corte Tradicional", 30.0, 30);
         seedServico("Corte + Barba", 45.0, 45);

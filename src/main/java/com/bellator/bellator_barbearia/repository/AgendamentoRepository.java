@@ -16,5 +16,6 @@ public interface AgendamentoRepository extends JpaRepository<Agendamentos, Long>
 
     List<Agendamentos> findByBarbeiroAndDataOrderByHorarioAsc(Usuarios barbeiro, LocalDate data);
 
-    List<Agendamentos> findByBarbeiroAndDataAndStatusNotOrderByHorarioAsc(Usuarios barbeiro, LocalDate data, StatusAgendamento status);
+    List<Agendamentos> findByBarbeiroAndDataAndStatusNotOrderByHorarioAsc(Usuarios barbeiro, LocalDate data,
+            StatusAgendamento status);
 }

@@ -5,6 +5,7 @@ import com.bellator.bellator_barbearia.exception.ApiException;
 import com.bellator.bellator_barbearia.model.Usuarios;
 import com.bellator.bellator_barbearia.repository.UsuarioRepository;
 import com.bellator.bellator_barbearia.security.JwtService;
+import com.bellator.bellator_barbearia.service.EmailService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,13 +21,15 @@ public class AuthService {
     private final PasswordEncoder encoder;
     private final AuthenticationManager authManager;
     private final JwtService jwtService;
+    private final EmailService emailService;
 
     public AuthService(UsuarioRepository usuarioRepo, PasswordEncoder encoder,
-                       AuthenticationManager authManager, JwtService jwtService) {
+                       AuthenticationManager authManager, JwtService jwtService, EmailService emailService) {
         this.usuarioRepo = usuarioRepo;
         this.encoder = encoder;
         this.authManager = authManager;
         this.jwtService = jwtService;
+        this.emailService = emailService;
     }
 
     public AuthResponse register(AuthRegisterRequest req) {
@@ -40,6 +43,9 @@ public class AuthService {
         u.setSenhaHash(encoder.encode(req.senha));
         u.setRole(com.bellator.bellator_barbearia.role.Role.CLIENTE); // Força cadastros públicos a serem sempre CLIENTE
         u = usuarioRepo.save(u);
+
+        // Envia email de boas-vindas assíncrono
+        emailService.enviarEmailBoasVindas(u.getEmail(), u.getNome());
 
         String token = jwtService.generate(u.getEmail(), Map.of(
                 "role", u.getRole().name(),

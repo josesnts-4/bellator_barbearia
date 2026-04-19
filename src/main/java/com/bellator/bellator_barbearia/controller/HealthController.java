@@ -7,7 +7,7 @@ import java.util.Map;
 
 @RestController
 public class HealthController {
-    @GetMapping("/")
+    //@GetMapping("/")
     public Map<String, Object> root() {
         return Map.of("ok", true, "name", "bellator-api");
     }

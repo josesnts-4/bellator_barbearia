@@ -19,7 +19,8 @@ public class AgendamentoService {
     private final UsuarioService usuarioService;
     private final ServicoService servicoService;
 
-    public AgendamentoService(AgendamentoRepository repo, UsuarioService usuarioService, ServicoService servicoService) {
+    public AgendamentoService(AgendamentoRepository repo, UsuarioService usuarioService,
+            ServicoService servicoService) {
         this.repo = repo;
         this.usuarioService = usuarioService;
         this.servicoService = servicoService;
@@ -58,7 +59,8 @@ public class AgendamentoService {
     }
 
     public Agendamentos concluir(Long id, String barbeiroEmail) {
-        Agendamentos a = repo.findById(id).orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Agendamento não encontrado"));
+        Agendamentos a = repo.findById(id)
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Agendamento não encontrado"));
         if (!a.getBarbeiro().getEmail().equalsIgnoreCase(barbeiroEmail)) {
             throw new ApiException(HttpStatus.FORBIDDEN, "Você não pode concluir esse agendamento");
         }
@@ -67,7 +69,8 @@ public class AgendamentoService {
     }
 
     public Agendamentos cancelar(Long id, String requesterEmail, boolean isAdmin) {
-        Agendamentos a = repo.findById(id).orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Agendamento não encontrado"));
+        Agendamentos a = repo.findById(id)
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Agendamento não encontrado"));
         boolean isClienteDono = a.getCliente().getEmail().equalsIgnoreCase(requesterEmail);
         if (!isAdmin && !isClienteDono) {
             throw new ApiException(HttpStatus.FORBIDDEN, "Você não pode cancelar esse agendamento");

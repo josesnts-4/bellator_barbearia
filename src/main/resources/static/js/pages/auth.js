@@ -31,11 +31,13 @@ export function AuthPage(){
         el("div",{class:"label"},"Senha"),
         el("div",{class:"password-wrapper"},[
           pass,
-          el("i", {
-            "data-lucide":"eye",
+          el("span", {
             class:"toggle-password",
-            "data-target":"loginPass"
-          })
+            "data-target":"loginPass",
+            style:"display:flex; align-items:center;"
+          }, [
+            el("i", {"data-lucide":"eye"})
+          ])
         ])
       ]),
 
@@ -51,6 +53,10 @@ export function AuthPage(){
         }
       }}, "Entrar")
     );
+
+    setTimeout(() => {
+      window.lucide?.createIcons?.();
+    }, 0);
   }
 
   function renderRegister(){
@@ -80,11 +86,13 @@ export function AuthPage(){
         el("div",{class:"label"},"Senha"),
         el("div",{class:"password-wrapper"},[
           pass,
-          el("i", {
-            "data-lucide":"eye",
+          el("span", {
             class:"toggle-password",
-            "data-target":"password"
-          })
+            "data-target":"password",
+            style:"display:flex; align-items:center;"
+          }, [
+            el("i", {"data-lucide":"eye"})
+          ])
         ])
       ]),
 
@@ -93,11 +101,13 @@ export function AuthPage(){
         el("div",{class:"label"},"Confirmar senha"),
         el("div",{class:"password-wrapper"},[
           confirmPass,
-          el("i", {
-            "data-lucide":"eye",
+          el("span", {
             class:"toggle-password",
-            "data-target":"confirmPassword"
-          })
+            "data-target":"confirmPassword",
+            style:"display:flex; align-items:center;"
+          }, [
+            el("i", {"data-lucide":"eye"})
+          ])
         ])
       ]),
 
@@ -134,20 +144,31 @@ export function AuthPage(){
 
       e.target.value = v;
     });
+
+    setTimeout(() => {
+      window.lucide?.createIcons?.();
+    }, 0);
   }
 
   // OLHO GLOBAL (FUNCIONA PRA LOGIN E CADASTRO)
   card.addEventListener("click", (e)=>{
-    if(e.target.classList.contains("toggle-password")){
-      const input = document.getElementById(e.target.dataset.target);
+    const toggleBtn = e.target.closest(".toggle-password");
+    if(toggleBtn){
+      const input = document.getElementById(toggleBtn.dataset.target);
 
+      let newIcon = "eye";
       if(input.type === "password"){
         input.type = "text";
-        e.target.setAttribute("data-lucide","eye-off");
+        newIcon = "eye-off";
       }else{
         input.type = "password";
-        e.target.setAttribute("data-lucide","eye");
+        newIcon = "eye";
       }
+
+      toggleBtn.innerHTML = "";
+      const iconEl = document.createElement("i");
+      iconEl.setAttribute("data-lucide", newIcon);
+      toggleBtn.appendChild(iconEl);
 
       window.lucide?.createIcons();
     }
