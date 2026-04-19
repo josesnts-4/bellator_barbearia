@@ -82,14 +82,18 @@ export async function BookConfirmPage(ctx) {
 
   wrap.append(
     el("div", { class: "card reveal" }, [
-      el("div", { class: "kv" }, [
-        el("i", { "data-lucide": "map-pin" }),
+      el("a", { 
+        href: "https://maps.google.com/?q=-7.8967,-34.8252", 
+        target: "_blank",
+        style: "text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px; cursor: pointer;" 
+      }, [
+        el("i", { "data-lucide": "map-pin", style: "color: var(--primary)" }),
         el("div", {}, [
-          el("small", {}, "Localização"),
+          el("small", {}, "Localização (Abrir no GPS)"),
           el("br"),
           el("strong", {}, "Bellator Barbearia"),
           el("br"),
-          el("small", {}, "R. Aristóteles Paes de Azevedo, 145 - Pau Amarelo, Paulista - PE, 53431-145")
+          el("small", {}, "R. Aristóteles Paes de Azevedo, 145 - Pau Amarelo, Paulista - PE")
         ]),
         el("div", { class: "right" }, "")
       ]),
