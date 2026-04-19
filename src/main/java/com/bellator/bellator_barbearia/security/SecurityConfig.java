@@ -51,8 +51,8 @@ public class SecurityConfig {
                     "/calendar.js"
                 ).permitAll()
 
-                // 🔓 LIBERA LOGIN / H2
-                .requestMatchers("/auth/**", "/h2-console/**").permitAll()
+                // 🔓 LIBERA LOGIN / H2 E ERROS
+                .requestMatchers("/auth/**", "/h2-console/**", "/error").permitAll()
 
                 // 🔓 LIBERA LISTAGENS PÚBLICAS (Serviços e Barbeiros)
                 .requestMatchers(HttpMethod.GET, "/servicos", "/usuarios/barbeiros").permitAll()
