@@ -33,11 +33,13 @@ public class EmailService {
                     + "Um abraço,\nEquipe Bellator Barbearia";
             
             mensagem.setText(texto);
+            System.out.println("Iniciando envio de email de boas-vindas para: " + destinatario);
             mailSender.send(mensagem);
             
             System.out.println("Email de boas-vindas enviado com sucesso para: " + destinatario);
         } catch (Exception e) {
-            System.err.println("Erro ao enviar email de boas-vindas para " + destinatario + ": " + e.getMessage());
+            System.err.println("Erro ao enviar email de boas-vindas para " + destinatario);
+            e.printStackTrace();
         }
     }
 }
