@@ -64,7 +64,7 @@ export function AuthPage(){
 
     const nome = el("input", {class:"input", type:"text", placeholder:"Seu nome completo", autocomplete:"name"});
     const email = el("input", {class:"input", type:"email", placeholder:"seu@email.com", autocomplete:"email"});
-    const tel = el("input", {class:"input", type:"tel", placeholder:"(81) 9xxxx-xxxx", autocomplete:"tel", id:"phone"});
+    const tel = el("input", {class:"input", type:"tel", placeholder:"(DDD) 9xxxx-xxxx", autocomplete:"tel", id:"phone"});
     const pass = el("input", {class:"input", type:"password", placeholder:"Crie uma senha", autocomplete:"new-password", id:"password"});
     const confirmPass = el("input", {class:"input", type:"password", placeholder:"Repita a senha", id:"confirmPassword"});
 
@@ -135,12 +135,14 @@ export function AuthPage(){
     tel.addEventListener("input", (e)=>{
       let v = e.target.value.replace(/\D/g,'');
 
-      if(!v.startsWith("81")) v = "81" + v;
+      v = v.slice(0,11); // Limita a 11 dígitos (DDD + 9 números)
 
-      v = v.slice(0,11);
-
-      v = v.replace(/^(\d{2})(\d)/g,"($1) $2");
-      v = v.replace(/(\d{5})(\d)/,"$1-$2");
+      if (v.length > 2) {
+        v = v.replace(/^(\d{2})(\d)/g,"($1) $2");
+      }
+      if (v.length > 7) {
+        v = v.replace(/(\d{5})(\d)/,"$1-$2");
+      }
 
       e.target.value = v;
     });
