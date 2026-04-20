@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -48,10 +50,11 @@ public class AgendamentoService {
         a.setHorario(req.horario);
         a.setStatus(StatusAgendamento.AGENDADO);
         Agendamentos salvo = repo.save(a);
-        
+
         // Enviar email de confirmação
-        emailService.enviarEmailConfirmacaoAgendamento(cliente.getEmail(), cliente.getNome(), salvo.getData(), salvo.getHorario());
-        
+        emailService.enviarEmailConfirmacaoAgendamento(cliente.getEmail(), cliente.getNome(), salvo.getData(),
+                salvo.getHorario());
+
         return salvo;
     }
 
@@ -83,7 +86,43 @@ public class AgendamentoService {
             throw new ApiException(HttpStatus.FORBIDDEN, "Você não pode cancelar esse agendamento");
         }
         a.setStatus(StatusAgendamento.CANCELADO);
-        return repo.save(a);
+        Agendamentos salvo = repo.save(a);
+
+        // Enviar email de cancelamento
+        emailService.enviarEmailCancelamentoAgendamento(a.getCliente().getEmail(), a.getCliente().getNome(),
+                salvo.getData(), salvo.getHorario());
+
+        return salvo;
+    }
+
+    public Agendamentos reagendar(Long id, LocalDate novaData, LocalTime novoHorario, String requesterEmail,
+            boolean isAdmin) {
+        Agendamentos a = repo.findById(id)
+                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Agendamento não encontrado"));
+
+        boolean isClienteDono = a.getCliente().getEmail().equalsIgnoreCase(requesterEmail);
+        if (!isAdmin && !isClienteDono) {
+            throw new ApiException(HttpStatus.FORBIDDEN, "Você não pode reagendar esse agendamento");
+        }
+
+        LocalDate dataAntiga = a.getData();
+        LocalTime horarioAntigo = a.getHorario();
+
+        // Verificar disponibilidade no novo horário
+        if (repo.existsByBarbeiroAndDataAndHorario(a.getBarbeiro(), novaData, novoHorario)) {
+            throw new ApiException(HttpStatus.CONFLICT, "Novo horário já ocupado");
+        }
+
+        a.setData(novaData);
+        a.setHorario(novoHorario);
+        a.setStatus(StatusAgendamento.AGENDADO);
+        Agendamentos salvo = repo.save(a);
+
+        // Enviar email de reagendamento
+        emailService.enviarEmailReagendamentoAgendamento(a.getCliente().getEmail(), a.getCliente().getNome(),
+                dataAntiga, horarioAntigo, novaData, novoHorario);
+
+        return salvo;
     }
 
     public List<Agendamentos> listarTodos() {

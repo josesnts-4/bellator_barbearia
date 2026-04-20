@@ -19,7 +19,7 @@ const defaultMsg = encodeURIComponent("Olá! Quero agendar um horário na Bellat
 whatsBtn.href = `https://wa.me/${WHATS_NUMBER}?text=${defaultMsg}`;
 
 const ctx = {
-  wizard: { serviceId: null, barberId: null, datetimeISO: null, __created: false }
+  wizard: { serviceId: null, barberId: null, datetimeISO: null, __created: false, rescheduleId: null }
 };
 
 function getPath() {

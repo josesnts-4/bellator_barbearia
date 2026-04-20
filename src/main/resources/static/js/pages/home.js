@@ -1,4 +1,5 @@
 import { el } from "../ui.js";
+import * as api from "../api.js";
 
 export function HomePage(ctx) {
   const div = document.createElement("div");
@@ -13,7 +14,7 @@ export function HomePage(ctx) {
     <section class="section grid3">
       <div class="stat">
         <i data-lucide="star"></i>
-        <div class="stat__v">4.9</div>
+        <div class="stat__v" id="avgRating">...</div>
         <div class="stat__k">Avaliação</div>
       </div>
 
@@ -105,6 +106,15 @@ export function HomePage(ctx) {
     if (gpsBtn) {
       gpsBtn.addEventListener("click", () => {
         window.open(mapsUrl, "_blank");
+      });
+    }
+
+    const avgRatingEl = div.querySelector("#avgRating");
+    if (avgRatingEl) {
+      api.getAverageRating().then(media => {
+        avgRatingEl.textContent = media > 0 ? media.toFixed(1) : "N/A";
+      }).catch(() => {
+        avgRatingEl.textContent = "4.9"; // Fallback
       });
     }
 

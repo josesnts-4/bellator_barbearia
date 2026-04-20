@@ -191,7 +191,9 @@ function normalizeAgendamentoResponse(r) {
     dataHora: toDataHoraISO(r.data, r.horario),
     status: statusLabel(r.status),
     servicoNome: r.servicoNome,
+    servicoId: r.servicoId,
     barbeiroNome: r.barbeiroNome,
+    barbeiroId: r.barbeiroId,
     clienteNome: r.clienteNome
   };
 }
@@ -259,6 +261,24 @@ export function cancelAppointment(id) {
   return request(`/agendamentos/${id}/cancelar`, {
     method: "PUT"
   });
+}
+
+export function rescheduleAppointment(id, data) {
+  return request(`/agendamentos/${id}/reagendar`, {
+    method: "PUT",
+    body: JSON.stringify(data)
+  });
+}
+
+export function submitReview(data) {
+  return request("/avaliacoes", {
+    method: "POST",
+    body: JSON.stringify(data)
+  });
+}
+
+export function getAverageRating() {
+  return request("/avaliacoes/media");
 }
 
 // ================= ADMIN =================

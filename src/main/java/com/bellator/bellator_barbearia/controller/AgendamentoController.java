@@ -1,6 +1,7 @@
 package com.bellator.bellator_barbearia.controller;
 
 import com.bellator.bellator_barbearia.dto.AgendamentoCreateRequest;
+import com.bellator.bellator_barbearia.dto.AgendamentoReagendarRequest;
 import com.bellator.bellator_barbearia.dto.AgendamentoResponse;
 import com.bellator.bellator_barbearia.model.Agendamentos;
 import com.bellator.bellator_barbearia.service.AgendamentoService;
@@ -49,12 +50,21 @@ public class AgendamentoController {
         return toResp(service.cancelar(id, auth.getName(), isAdmin));
     }
 
+    @PutMapping("/{id}/reagendar")
+    public AgendamentoResponse reagendar(Authentication auth, @PathVariable Long id, @RequestBody AgendamentoReagendarRequest req) {
+        boolean isAdmin = auth.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+        return toResp(service.reagendar(id, req.data, req.horario, auth.getName(), isAdmin));
+    }
+
     private AgendamentoResponse toResp(Agendamentos a) {
         return new AgendamentoResponse(
                 a.getId(),
                 a.getCliente().getNome(),
                 a.getBarbeiro().getNome(),
+                a.getBarbeiro().getId(),
                 a.getServicos().getNome(),
+                a.getServicos().getId(),
                 a.getServicos().getPreco(),
                 a.getData(),
                 a.getHorario(),

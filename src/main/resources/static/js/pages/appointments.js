@@ -55,6 +55,12 @@ export function AppointmentsPage(ctx){
       const actions = el("div",{style:"margin-top:12px;display:flex;gap:10px;flex-wrap:wrap"});
       if(user.role==="cliente" && status==="Agendado"){
         actions.append(el("button",{class:"btn btn--danger", type:"button", onClick: ()=> confirmCancel(a.id)}, "Cancelar"));
+        actions.append(el("button",{class:"btn btn--outline", type:"button", onClick: ()=>{
+          ctx.wizard.serviceId = a.servicoId;
+          ctx.wizard.barberId = a.barbeiroId;
+          ctx.wizard.rescheduleId = a.id;
+          location.hash = "#/book/datetime";
+        }}, "Reagendar"));
       }
       if(user.role==="barbeiro" && status==="Agendado"){
         actions.append(el("button",{class:"btn btn--primary", type:"button", onClick: async ()=>{
@@ -62,6 +68,9 @@ export function AppointmentsPage(ctx){
           toast("Atendimento marcado como concluído ✅");
           render();
         }}, "Concluir"));
+      }
+      if(user.role==="cliente" && status==="Concluído"){
+        actions.append(el("button",{class:"btn", type:"button", onClick: ()=> openReviewModal()}, "Avaliar"));
       }
       if(user.role==="admin"){
         actions.append(el("button",{class:"btn", type:"button", onClick: ()=> toast("Dica: no painel admin você vê relatórios.")}, "Info"));
@@ -91,6 +100,67 @@ export function AppointmentsPage(ctx){
         }
       ]
     });
+  }
+
+  function openReviewModal(){
+    let selectedStars = 5;
+    const starRow = el("div", {class:"chips", style:"margin-bottom:14px; justify-content:center"});
+    
+    function renderStars(){
+      starRow.innerHTML = "";
+      for(let i=1; i<=5; i++){
+        const isSel = i <= selectedStars;
+        const star = el("button", {
+          class: `icon-btn ${isSel ? "btn--primary" : ""}`,
+          style: "width:40px; height:40px; border-radius:10px",
+          onClick: ()=>{
+            selectedStars = i;
+            renderStars();
+          }
+        }, [el("i", {"data-lucide":"star", style: isSel ? "fill:currentColor" : ""})]);
+        starRow.append(star);
+      }
+      window.lucide?.createIcons?.();
+    }
+    
+    const commentInput = el("textarea", {
+      class: "input",
+      style: "width:100%; height:80px; border-radius:14px; padding:10px; margin-bottom:10px",
+      placeholder: "Deixe um comentário (opcional)..."
+    });
+
+    modal({
+      title: "Avaliar Barbearia",
+      body: "Sua opinião é muito importante para nós!",
+      actions: [
+        { label: "Agora não", variant: "btn--outline" },
+        { 
+          label: "Enviar Avaliação", 
+          variant: "btn--primary", 
+          onClick: async ()=>{
+            try {
+              await api.submitReview({
+                nota: selectedStars,
+                comentario: commentInput.value
+              });
+              toast("Obrigado pela avaliação! ⭐");
+              render();
+            } catch(e) {
+              toast("Erro ao enviar avaliação.");
+            }
+          }
+        }
+      ]
+    });
+
+    // Inserir estrelas e input antes dos botões do modal
+    const modalDiv = document.querySelector(".modal");
+    if(modalDiv){
+      const btnRow = modalDiv.querySelector(".btn-row");
+      modalDiv.insertBefore(starRow, btnRow);
+      modalDiv.insertBefore(commentInput, btnRow);
+      renderStars();
+    }
   }
 
   render();

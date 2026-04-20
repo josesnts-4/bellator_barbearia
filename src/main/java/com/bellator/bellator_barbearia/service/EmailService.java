@@ -77,4 +77,66 @@ public class EmailService {
             e.printStackTrace();
         }
     }
+
+    @Async
+    public void enviarEmailCancelamentoAgendamento(String destinatario, String nome, LocalDate data, LocalTime horario) {
+        try {
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+
+            SimpleMailMessage mensagem = new SimpleMailMessage();
+            mensagem.setFrom(remetente);
+            mensagem.setTo(destinatario);
+            mensagem.setSubject("Cancelamento de Agendamento - Bellator Barbearia \u274C");
+
+            String texto = "Olá " + nome + ",\n\n"
+                    + "Informamos que o seu agendamento foi cancelado.\n\n"
+                    + "Detalhes do Agendamento Cancelado:\n"
+                    + "📅 Data: " + data.format(dateFormatter) + "\n"
+                    + "⏰ Horário: " + horario.format(timeFormatter) + "\n\n"
+                    + "Caso deseje realizar um novo agendamento, acesse nosso sistema.\n\n"
+                    + "Atenciosamente,\nEquipe Bellator Barbearia";
+
+            mensagem.setText(texto);
+            System.out.println("Iniciando envio de email de cancelamento de agendamento para: " + destinatario);
+            mailSender.send(mensagem);
+
+            System.out.println("Email de cancelamento de agendamento enviado com sucesso para: " + destinatario);
+        } catch (Exception e) {
+            System.err.println("Erro ao enviar email de cancelamento de agendamento para " + destinatario);
+            e.printStackTrace();
+        }
+    }
+
+    @Async
+    public void enviarEmailReagendamentoAgendamento(String destinatario, String nome, 
+            LocalDate dataAntiga, LocalTime horarioAntigo, LocalDate dataNova, LocalTime horarioNovo) {
+        try {
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+
+            SimpleMailMessage mensagem = new SimpleMailMessage();
+            mensagem.setFrom(remetente);
+            mensagem.setTo(destinatario);
+            mensagem.setSubject("Reagendamento de Agendamento - Bellator Barbearia \uD83D\uDD04");
+
+            String texto = "Olá " + nome + ",\n\n"
+                    + "Seu agendamento foi reagendado com sucesso!\n\n"
+                    + "De:\n"
+                    + "📅 " + dataAntiga.format(dateFormatter) + " às " + horarioAntigo.format(timeFormatter) + "\n\n"
+                    + "Para:\n"
+                    + "📅 " + dataNova.format(dateFormatter) + " às " + horarioNovo.format(timeFormatter) + "\n\n"
+                    + "Estamos ansiosos para atendê-lo no novo horário!\n\n"
+                    + "Atenciosamente,\nEquipe Bellator Barbearia";
+
+            mensagem.setText(texto);
+            System.out.println("Iniciando envio de email de reagendamento para: " + destinatario);
+            mailSender.send(mensagem);
+
+            System.out.println("Email de reagendamento enviado com sucesso para: " + destinatario);
+        } catch (Exception e) {
+            System.err.println("Erro ao enviar email de reagendamento para " + destinatario);
+            e.printStackTrace();
+        }
+    }
 }

@@ -28,12 +28,17 @@ export async function BookConfirmPage(ctx) {
         throw new Error("Dados do agendamento incompletos. Volte e conclua as etapas.");
       }
       const { data, horario } = toLocalDateAndHorario(ctx.wizard.datetimeISO);
-      await api.createAppointment({
-        servicoId: Number(ctx.wizard.serviceId),
-        barbeiroId: Number(ctx.wizard.barberId),
-        data,
-        horario
-      });
+      
+      if (ctx.wizard.rescheduleId) {
+        await api.rescheduleAppointment(ctx.wizard.rescheduleId, { data, horario });
+      } else {
+        await api.createAppointment({
+          servicoId: Number(ctx.wizard.serviceId),
+          barbeiroId: Number(ctx.wizard.barberId),
+          data,
+          horario
+        });
+      }
       ctx.wizard.__created = true;
     } catch (e) {
       errMsg = e.message || "Não foi possível finalizar.";
@@ -68,8 +73,8 @@ export async function BookConfirmPage(ctx) {
         el("div", { style: "display:flex; align-items:center; justify-content:center; margin:8px 0 6px" }, [
           el("i", { "data-lucide": "check" })
         ]),
-        el("h1", { class: "h1", style: "text-align:center;margin-top:0" }, "Agendamento Confirmado!"),
-        el("p", { class: "sub", style: "text-align:center;margin-top:-6px" }, "Seu horário foi reservado com sucesso"),
+        el("h1", { class: "h1", style: "text-align:center;margin-top:0" }, ctx.wizard.rescheduleId ? "Agendamento Reagendado!" : "Agendamento Confirmado!"),
+        el("p", { class: "sub", style: "text-align:center;margin-top:-6px" }, ctx.wizard.rescheduleId ? "Seu novo horário foi reservado com sucesso" : "Seu horário foi reservado com sucesso"),
         el("div", { style: "display:grid; gap:10px; margin-top:12px" }, [
           kv("scissors", "Serviço", service?.nome || "-", money(service?.preco || 0)),
           kv("user", "Barbeiro", barber?.nome || "-", barber?.especialidade || ""),
