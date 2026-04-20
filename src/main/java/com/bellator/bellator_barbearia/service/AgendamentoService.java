@@ -18,12 +18,14 @@ public class AgendamentoService {
     private final AgendamentoRepository repo;
     private final UsuarioService usuarioService;
     private final ServicoService servicoService;
+    private final EmailService emailService;
 
     public AgendamentoService(AgendamentoRepository repo, UsuarioService usuarioService,
-            ServicoService servicoService) {
+            ServicoService servicoService, EmailService emailService) {
         this.repo = repo;
         this.usuarioService = usuarioService;
         this.servicoService = servicoService;
+        this.emailService = emailService;
     }
 
     public Agendamentos criar(String clienteEmail, AgendamentoCreateRequest req) {
@@ -45,7 +47,12 @@ public class AgendamentoService {
         a.setData(req.data);
         a.setHorario(req.horario);
         a.setStatus(StatusAgendamento.AGENDADO);
-        return repo.save(a);
+        Agendamentos salvo = repo.save(a);
+        
+        // Enviar email de confirmação
+        emailService.enviarEmailConfirmacaoAgendamento(cliente.getEmail(), cliente.getNome(), salvo.getData(), salvo.getHorario());
+        
+        return salvo;
     }
 
     public List<Agendamentos> meus(String clienteEmail) {

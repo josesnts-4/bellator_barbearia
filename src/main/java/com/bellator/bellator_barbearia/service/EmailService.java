@@ -6,6 +6,10 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 @Service
 public class EmailService {
 
@@ -39,6 +43,37 @@ public class EmailService {
             System.out.println("Email de boas-vindas enviado com sucesso para: " + destinatario);
         } catch (Exception e) {
             System.err.println("Erro ao enviar email de boas-vindas para " + destinatario);
+            e.printStackTrace();
+        }
+    }
+
+    @Async
+    public void enviarEmailConfirmacaoAgendamento(String destinatario, String nome, LocalDate data, LocalTime horario) {
+        try {
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+
+            SimpleMailMessage mensagem = new SimpleMailMessage();
+            mensagem.setFrom(remetente);
+            mensagem.setTo(destinatario);
+            mensagem.setSubject("Confirmação de Agendamento - Bellator Barbearia \uD83D\uDCC5");
+
+            String texto = "Olá " + nome + ",\n\n"
+                    + "Seu agendamento foi confirmado com sucesso!\n\n"
+                    + "Detalhes do Agendamento:\n"
+                    + "📅 Data: " + data.format(dateFormatter) + "\n"
+                    + "⏰ Horário: " + horario.format(timeFormatter) + "\n\n"
+                    + "Estamos ansiosos para atendê-lo!\n\n"
+                    + "Caso precise cancelar ou reagendar, acesse nosso sistema.\n\n"
+                    + "Atenciosamente,\nEquipe Bellator Barbearia";
+
+            mensagem.setText(texto);
+            System.out.println("Iniciando envio de email de confirmação de agendamento para: " + destinatario);
+            mailSender.send(mensagem);
+
+            System.out.println("Email de confirmação de agendamento enviado com sucesso para: " + destinatario);
+        } catch (Exception e) {
+            System.err.println("Erro ao enviar email de confirmação de agendamento para " + destinatario);
             e.printStackTrace();
         }
     }
