@@ -46,7 +46,8 @@ public class EmailService {
             
             System.out.println("Email de boas-vindas enviado com sucesso para: " + destinatario);
         } catch (Exception e) {
-            System.err.println("Erro ao enviar email de boas-vindas para " + destinatario);
+            System.err.println("ERRO CRÍTICO ao enviar email de boas-vindas para " + destinatario + ": " + e.getMessage());
+            if (e.getCause() != null) System.err.println("Causa: " + e.getCause().getMessage());
             e.printStackTrace();
         }
     }
@@ -77,7 +78,8 @@ public class EmailService {
 
             System.out.println("Email de confirmação de agendamento enviado com sucesso para: " + destinatario);
         } catch (Exception e) {
-            System.err.println("Erro ao enviar email de confirmação de agendamento para " + destinatario);
+            System.err.println("ERRO CRÍTICO ao enviar email de confirmação de agendamento para " + destinatario + ": " + e.getMessage());
+            if (e.getCause() != null) System.err.println("Causa: " + e.getCause().getMessage());
             e.printStackTrace();
         }
     }
@@ -107,7 +109,8 @@ public class EmailService {
 
             System.out.println("Email de cancelamento de agendamento enviado com sucesso para: " + destinatario);
         } catch (Exception e) {
-            System.err.println("Erro ao enviar email de cancelamento de agendamento para " + destinatario);
+            System.err.println("ERRO CRÍTICO ao enviar email de cancelamento de agendamento para " + destinatario + ": " + e.getMessage());
+            if (e.getCause() != null) System.err.println("Causa: " + e.getCause().getMessage());
             e.printStackTrace();
         }
     }
@@ -139,7 +142,8 @@ public class EmailService {
 
             System.out.println("Email de reagendamento enviado com sucesso para: " + destinatario);
         } catch (Exception e) {
-            System.err.println("Erro ao enviar email de reagendamento para " + destinatario);
+            System.err.println("ERRO CRÍTICO ao enviar email de reagendamento para " + destinatario + ": " + e.getMessage());
+            if (e.getCause() != null) System.err.println("Causa: " + e.getCause().getMessage());
             e.printStackTrace();
         }
     }
