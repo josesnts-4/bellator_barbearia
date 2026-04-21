@@ -22,7 +22,7 @@ public class EmailService {
         this.mailSender = mailSender;
     }
 
-    @Async
+    // @Async
     public void enviarEmailBoasVindas(String destinatario, String nome) {
         try {
             SimpleMailMessage mensagem = new SimpleMailMessage();
@@ -47,7 +47,7 @@ public class EmailService {
         }
     }
 
-    @Async
+    // @Async
     public void enviarEmailConfirmacaoAgendamento(String destinatario, String nome, LocalDate data, LocalTime horario) {
         try {
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -78,7 +78,7 @@ public class EmailService {
         }
     }
 
-    @Async
+    // @Async
     public void enviarEmailCancelamentoAgendamento(String destinatario, String nome, LocalDate data, LocalTime horario) {
         try {
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -108,7 +108,7 @@ public class EmailService {
         }
     }
 
-    @Async
+    // @Async
     public void enviarEmailReagendamentoAgendamento(String destinatario, String nome, 
             LocalDate dataAntiga, LocalTime horarioAntigo, LocalDate dataNova, LocalTime horarioNovo) {
         try {
@@ -138,5 +138,14 @@ public class EmailService {
             System.err.println("Erro ao enviar email de reagendamento para " + destinatario);
             e.printStackTrace();
         }
+    }
+
+    public void enviarEmailTeste(String destinatario) {
+        SimpleMailMessage mensagem = new SimpleMailMessage();
+        mensagem.setFrom(remetente);
+        mensagem.setTo(destinatario);
+        mensagem.setSubject("Teste de Configuração - Bellator Barbearia");
+        mensagem.setText("Se você recebeu este email, a configuração SMTP está funcionando corretamente no Railway!");
+        mailSender.send(mensagem);
     }
 }
