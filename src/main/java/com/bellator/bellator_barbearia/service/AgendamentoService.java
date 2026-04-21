@@ -108,11 +108,19 @@ public class AgendamentoService {
         LocalDate dataAntiga = a.getData();
         LocalTime horarioAntigo = a.getHorario();
 
+        System.out.println("Tentativa de Reagendamento ID: " + id);
+        System.out.println("Antigo: " + dataAntiga + " " + horarioAntigo);
+        System.out.println("Novo:   " + novaData + " " + novoHorario);
+
         // Verificar disponibilidade no novo horário apenas se ele mudou
         if (!dataAntiga.equals(novaData) || !horarioAntigo.equals(novoHorario)) {
+            System.out.println("O horário mudou. Verificando disponibilidade...");
             if (repo.existsByBarbeiroAndDataAndHorario(a.getBarbeiro(), novaData, novoHorario)) {
+                System.out.println("CONFLITO: Horário já ocupado no banco!");
                 throw new ApiException(HttpStatus.CONFLICT, "Novo horário já ocupado");
             }
+        } else {
+            System.out.println("O horário é o mesmo. Ignorando verificação de conflito.");
         }
 
         a.setData(novaData);

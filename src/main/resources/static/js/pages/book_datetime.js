@@ -59,7 +59,7 @@ export function BookDateTimePage(ctx){
     const dend = new Date(day);
     dend.setHours(eh, em, 0, 0);
 
-    const busy = new Set((busyTimes||[]).map(String));
+    const busy = new Set((busyTimes||[]).map(s => String(s).slice(0,5)));
 
     for(let t = new Date(d0); addMinutes(t, dur) <= dend; t = addMinutes(t, step)){
       const startT = new Date(t);
