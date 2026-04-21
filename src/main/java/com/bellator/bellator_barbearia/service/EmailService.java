@@ -22,6 +22,10 @@ public class EmailService {
         this.mailSender = mailSender;
     }
 
+    public void verificarConfig() {
+        System.out.println("DEBUG: Tentando enviar e-mail usando o remetente: [" + remetente + "]");
+    }
+
     // @Async
     public void enviarEmailBoasVindas(String destinatario, String nome) {
         try {
@@ -141,6 +145,7 @@ public class EmailService {
     }
 
     public void enviarEmailTeste(String destinatario) {
+        verificarConfig();
         SimpleMailMessage mensagem = new SimpleMailMessage();
         mensagem.setFrom(remetente);
         mensagem.setTo(destinatario);
