@@ -108,9 +108,11 @@ public class AgendamentoService {
         LocalDate dataAntiga = a.getData();
         LocalTime horarioAntigo = a.getHorario();
 
-        // Verificar disponibilidade no novo horário
-        if (repo.existsByBarbeiroAndDataAndHorario(a.getBarbeiro(), novaData, novoHorario)) {
-            throw new ApiException(HttpStatus.CONFLICT, "Novo horário já ocupado");
+        // Verificar disponibilidade no novo horário apenas se ele mudou
+        if (!dataAntiga.equals(novaData) || !horarioAntigo.equals(novoHorario)) {
+            if (repo.existsByBarbeiroAndDataAndHorario(a.getBarbeiro(), novaData, novoHorario)) {
+                throw new ApiException(HttpStatus.CONFLICT, "Novo horário já ocupado");
+            }
         }
 
         a.setData(novaData);
