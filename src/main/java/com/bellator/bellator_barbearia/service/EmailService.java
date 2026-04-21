@@ -26,7 +26,7 @@ public class EmailService {
         System.out.println("DEBUG: Tentando enviar e-mail usando o remetente: [" + remetente + "]");
     }
 
-    // @Async
+    @Async
     public void enviarEmailBoasVindas(String destinatario, String nome) {
         try {
             SimpleMailMessage mensagem = new SimpleMailMessage();
@@ -51,7 +51,7 @@ public class EmailService {
         }
     }
 
-    // @Async
+    @Async
     public void enviarEmailConfirmacaoAgendamento(String destinatario, String nome, LocalDate data, LocalTime horario) {
         try {
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -82,7 +82,7 @@ public class EmailService {
         }
     }
 
-    // @Async
+    @Async
     public void enviarEmailCancelamentoAgendamento(String destinatario, String nome, LocalDate data, LocalTime horario) {
         try {
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -112,7 +112,7 @@ public class EmailService {
         }
     }
 
-    // @Async
+    @Async
     public void enviarEmailReagendamentoAgendamento(String destinatario, String nome, 
             LocalDate dataAntiga, LocalTime horarioAntigo, LocalDate dataNova, LocalTime horarioNovo) {
         try {
